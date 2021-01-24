@@ -1,7 +1,5 @@
 ## Sysmon1: A simple system monitor
-Uses Stopwatch example as basis to develop simple cpu usage monitor.
-
-The Stopwatch app, that was used as the starting point for this app can be found at: https://github.com/jinjagit/iced/tree/master/examples/stopwatch which is a fork of: https://github.com/hecrj/iced/tree/master/examples/stopwatch
+Uses [Stopwatch example](https://github.com/hecrj/iced/tree/master/examples/stopwatch) as basis to develop simple cpu usage monitor.
 
 Made simply to practice and explore using the iced crate.
 
