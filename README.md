@@ -1,7 +1,7 @@
 ## Sysmon1: A simple system monitor
 Uses [Stopwatch example](https://github.com/hecrj/iced/tree/master/examples/stopwatch) as basis to develop simple cpu usage monitor.
 
-Made simply to practice and explore using the iced crate.
+Made simply to practice and explore using the [iced](https://crates.io/crates/iced) crate.
 
 The stop / start button is not really useful at all, but is included just to include some UI interaction.
 
