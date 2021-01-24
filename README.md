@@ -14,4 +14,4 @@ Thanks to Héctor Ramón Jiménez (owner of [Iced repo.](https://github.com/jinj
 2. Use columns, and include more data (each virtual core, temps, RAM usage, etc.)
 
 ## Screen-capture:
-![iced_gui.gif](https://github.com/jinjagit/iced/blob/master/my-stuff/cputest/gif/iced_gui.gif)
+![iced_gui.gif](https://github.com/jinjagit/sysmon1/blob/main/gif/iced_gui.gif)
