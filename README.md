@@ -8,7 +8,7 @@ The stop / start button is not really useful at all, but is included just to inc
 Thanks to Héctor Ramón Jiménez (owner of [Iced repo.](https://github.com/jinjagit/iced) on GitHub) for his help with a couple of issues I had while writing this example app.
 
 ### Next steps:
-1. Try creating an indicator bar ( arectangle which changes size according to the % usage var. value)
+1. Try creating an indicator bar (a rectangle which changes size according to the % usage var. value)
 2. Use columns, and include more data (each virtual core, temps, RAM usage, etc.)
 
 ## Screen-capture:
