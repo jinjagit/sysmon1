@@ -43,15 +43,7 @@ impl Application for SystemMonitor {
                 sysinfo: sysinfo::System::new_all(),
                 cpu_usage: 0.0,
                 num_cores: {
-                    let system = sysinfo::System::new_all();
-                    let mut num: u8 = 0;
-
-                    // Count virtual cores.
-                    for _processor in system.get_processors() {
-                        num += 1;
-                    }
-
-                    num
+                    get_num_cores()
                 },
                 aves: vec![0.0, 0.0, 0.0, 0.0, 0.0],
                 cpu_usage_text: Text::new(format!("---")).size(40),

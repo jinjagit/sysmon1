@@ -1,3 +1,5 @@
+use sysinfo::{ProcessorExt, System, SystemExt};
+
 // pub const GREETING: &'static str = "Hallo, Rust library here!";
 
 pub fn array_ave(arry: Vec<f32>) -> f32 {
@@ -16,4 +18,16 @@ pub fn add_to_queue(mut arry: Vec<f32>, new_elem: f32) -> Vec<f32> {
     arry.remove(0); // remove element at start of vector
 
     arry
+}
+
+pub fn get_num_cores() -> u8 {
+    let system = sysinfo::System::new_all();
+    let mut num: u8 = 0;
+
+    // Count virtual cores.
+    for _processor in system.get_processors() {
+        num += 1;
+    }
+
+    num
 }
