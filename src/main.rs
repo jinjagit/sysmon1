@@ -1,17 +1,17 @@
 mod sys_info;
 
-use sys_info::SystemInfo;
 use iced::{
     button, executor, time, Align, Application, Button, Column, Command, Container, Element,
     HorizontalAlignment, Length, Row, Settings, Subscription, Text,
 };
 use std::time::Duration;
+use sys_info::SystemInfo;
 
 pub fn main() -> iced::Result {
-    SystemMonitor::run(Settings::default())
+    GUI::run(Settings::default())
 }
 
-struct SystemMonitor {
+struct GUI {
     sys_info: SystemInfo,
     cpu_usage: f32,
     state: State,
@@ -30,14 +30,14 @@ enum Message {
     Tick,
 }
 
-impl Application for SystemMonitor {
+impl Application for GUI {
     type Executor = executor::Default;
     type Message = Message;
     type Flags = ();
 
-    fn new(_flags: ()) -> (SystemMonitor, Command<Message>) {
+    fn new(_flags: ()) -> (GUI, Command<Message>) {
         (
-            SystemMonitor {
+            GUI {
                 sys_info: Default::default(),
                 cpu_usage: 0.0,
                 state: State::Idle,

@@ -57,7 +57,7 @@ impl Default for SystemInfo {
 
                 num
             },
-            aves: vec![0.0, 0.0, 0.0, 0.0, 0.0],
+            aves: vec![0.0; 5],
         }
     }
 }
