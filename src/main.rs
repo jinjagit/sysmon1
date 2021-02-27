@@ -1,26 +1,19 @@
+mod sys_info;
+
+use sys_info::SystemInfo;
 use iced::{
     button, executor, time, Align, Application, Button, Column, Command, Container, Element,
     HorizontalAlignment, Length, Row, Settings, Subscription, Text,
 };
 use std::time::Duration;
-use sysinfo::{ProcessorExt, System, SystemExt};
-use sysmon1::*;
-
-mod test;
-
-use test::TestStruct;
 
 pub fn main() -> iced::Result {
     SystemMonitor::run(Settings::default())
 }
 
 struct SystemMonitor {
-    my_struct: TestStruct,
-    sysinfo: System,
+    sys_info: SystemInfo,
     cpu_usage: f32,
-    num_cores: u8,
-    aves: Vec<f32>,
-    cpu_usage_text: Text,
     state: State,
     toggle: button::State,
 }
@@ -45,12 +38,8 @@ impl Application for SystemMonitor {
     fn new(_flags: ()) -> (SystemMonitor, Command<Message>) {
         (
             SystemMonitor {
-                my_struct: Default::default(),
-                sysinfo: sysinfo::System::new_all(),
+                sys_info: Default::default(),
                 cpu_usage: 0.0,
-                num_cores: { get_num_cores() },
-                aves: vec![0.0, 0.0, 0.0, 0.0, 0.0],
-                cpu_usage_text: Text::new(format!("---")).size(40),
                 state: State::Idle,
                 toggle: button::State::new(),
             },
@@ -74,23 +63,7 @@ impl Application for SystemMonitor {
             },
             Message::Tick => match &mut self.state {
                 State::Ticking => {
-                    println!("num: {}", self.my_struct.num_cores);
-
-                    self.sysinfo.refresh_all();
-
-                    let mut total: f32 = 0.0;
-
-                    for processor in self.sysinfo.get_processors() {
-                        total += processor.get_cpu_usage();
-                    }
-
-                    let new_ave = total / self.num_cores as f32;
-
-                    self.aves = add_to_queue(self.aves.clone(), new_ave);
-
-                    self.cpu_usage = array_ave(self.aves.clone());
-
-                    self.cpu_usage_text = Text::new(format!("{:.2}", self.cpu_usage)).size(40);
+                    self.cpu_usage = self.sys_info.cpu_usage();
                 }
                 _ => {}
             },
