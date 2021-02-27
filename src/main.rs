@@ -6,7 +6,15 @@ use std::time::Duration;
 use sysinfo::{ProcessorExt, System, SystemExt};
 use sysmon1::*;
 
+mod test;
+
+use test::TestStruct;
+
 pub fn main() -> iced::Result {
+    let mut my_struct: TestStruct = Default::default();
+
+    println!("num: {}", my_struct.add());
+
     SystemMonitor::run(Settings::default())
 }
 
