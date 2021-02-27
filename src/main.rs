@@ -11,14 +11,11 @@ mod test;
 use test::TestStruct;
 
 pub fn main() -> iced::Result {
-    let mut my_struct: TestStruct = Default::default();
-
-    println!("num: {}", my_struct.add());
-
     SystemMonitor::run(Settings::default())
 }
 
 struct SystemMonitor {
+    my_struct: TestStruct,
     sysinfo: System,
     cpu_usage: f32,
     num_cores: u8,
@@ -48,11 +45,10 @@ impl Application for SystemMonitor {
     fn new(_flags: ()) -> (SystemMonitor, Command<Message>) {
         (
             SystemMonitor {
+                my_struct: Default::default(),
                 sysinfo: sysinfo::System::new_all(),
                 cpu_usage: 0.0,
-                num_cores: {
-                    get_num_cores()
-                },
+                num_cores: { get_num_cores() },
                 aves: vec![0.0, 0.0, 0.0, 0.0, 0.0],
                 cpu_usage_text: Text::new(format!("---")).size(40),
                 state: State::Idle,
@@ -78,6 +74,8 @@ impl Application for SystemMonitor {
             },
             Message::Tick => match &mut self.state {
                 State::Ticking => {
+                    println!("num: {}", self.my_struct.num_cores);
+
                     self.sysinfo.refresh_all();
 
                     let mut total: f32 = 0.0;
