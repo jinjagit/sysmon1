@@ -1,7 +1,6 @@
 use iced::{
-    button, executor, time, Align, Application, Button, Column, Command,
-    Container, Element, HorizontalAlignment, Length, Row, Settings,
-    Subscription, Text,
+    button, executor, time, Align, Application, Button, Column, Command, Container, Element,
+    HorizontalAlignment, Length, Row, Settings, Subscription, Text,
 };
 use std::time::Duration;
 use sysinfo::{ProcessorExt, System, SystemExt};
@@ -81,8 +80,6 @@ impl Application for SystemMonitor {
             },
             Message::Tick => match &mut self.state {
                 State::Ticking => {
-                    println!("{}", greet(99));
-
                     self.sysinfo.refresh_all();
 
                     let mut total: f32 = 0.0;
@@ -93,21 +90,14 @@ impl Application for SystemMonitor {
 
                     self.aves[self.aves_index] = total / self.num_cores as f32;
 
-                    total = 0.0;
-
-                    for j in 0..self.aves.iter().count() {
-                        total += self.aves[j];
-                    }
-
-                    self.cpu_usage = total / 5.0;
+                    self.cpu_usage = array_ave(self.aves.clone());
 
                     self.aves_index += 1;
                     if self.aves_index == 5 {
                         self.aves_index = 0;
                     }
 
-                    self.cpu_usage_text =
-                        Text::new(format!("{:.2}", self.cpu_usage)).size(40);
+                    self.cpu_usage_text = Text::new(format!("{:.2}", self.cpu_usage)).size(40);
                 }
                 _ => {}
             },
@@ -120,22 +110,21 @@ impl Application for SystemMonitor {
         const TICK: u64 = 500; // Tick time step, in miliseconds.
         match self.state {
             State::Idle => Subscription::none(),
-            State::Ticking => time::every(Duration::from_millis(TICK))
-                .map(|_instant| Message::Tick),
+            State::Ticking => {
+                time::every(Duration::from_millis(TICK)).map(|_instant| Message::Tick)
+            }
         }
     }
 
     fn view(&mut self) -> Element<Message> {
         let info_text = Text::new(format!("CPU % usage")).size(24);
 
-        let cpu_usage_text =
-            Text::new(format!("{:.2}", self.cpu_usage)).size(40);
+        let cpu_usage_text = Text::new(format!("{:.2}", self.cpu_usage)).size(40);
 
         let button = |state, label, style| {
             Button::new(
                 state,
-                Text::new(label)
-                    .horizontal_alignment(HorizontalAlignment::Center),
+                Text::new(label).horizontal_alignment(HorizontalAlignment::Center),
             )
             .min_width(80)
             .padding(10)
@@ -198,9 +187,7 @@ mod style {
     impl container::StyleSheet for Container {
         fn style(&self) -> container::Style {
             container::Style {
-                background: Some(Background::Color(Color::from_rgb8(
-                    0x36, 0x39, 0x3F,
-                ))),
+                background: Some(Background::Color(Color::from_rgb8(0x36, 0x39, 0x3F))),
                 text_color: Some(Color::WHITE),
                 ..container::Style::default()
             }
