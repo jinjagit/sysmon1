@@ -5,6 +5,7 @@ use iced::{
 };
 use std::time::Duration;
 use sysinfo::{ProcessorExt, System, SystemExt};
+use sysmon1::*;
 
 pub fn main() -> iced::Result {
     SystemMonitor::run(Settings::default())
@@ -80,6 +81,8 @@ impl Application for SystemMonitor {
             },
             Message::Tick => match &mut self.state {
                 State::Ticking => {
+                    println!("{}", greet(99));
+
                     self.sysinfo.refresh_all();
 
                     let mut total: f32 = 0.0;
