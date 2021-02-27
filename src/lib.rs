@@ -10,3 +10,10 @@ pub fn array_ave(arry: Vec<f32>) -> f32 {
 
     return total / count as f32;
 }
+
+pub fn add_to_queue(mut arry: Vec<f32>, new_elem: f32) -> Vec<f32> {
+    arry.push(new_elem); // add element to end of vector
+    arry.remove(0); // remove element at start of vector
+
+    arry
+}

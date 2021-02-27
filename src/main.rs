@@ -15,7 +15,6 @@ struct SystemMonitor {
     cpu_usage: f32,
     num_cores: u8,
     aves: Vec<f32>,
-    aves_index: usize,
     cpu_usage_text: Text,
     state: State,
     toggle: button::State,
@@ -55,7 +54,6 @@ impl Application for SystemMonitor {
                     num
                 },
                 aves: vec![0.0, 0.0, 0.0, 0.0, 0.0],
-                aves_index: 0,
                 cpu_usage_text: Text::new(format!("---")).size(40),
                 state: State::Idle,
                 toggle: button::State::new(),
@@ -88,14 +86,11 @@ impl Application for SystemMonitor {
                         total += processor.get_cpu_usage();
                     }
 
-                    self.aves[self.aves_index] = total / self.num_cores as f32;
+                    let new_ave = total / self.num_cores as f32;
+
+                    self.aves = add_to_queue(self.aves.clone(), new_ave);
 
                     self.cpu_usage = array_ave(self.aves.clone());
-
-                    self.aves_index += 1;
-                    if self.aves_index == 5 {
-                        self.aves_index = 0;
-                    }
 
                     self.cpu_usage_text = Text::new(format!("{:.2}", self.cpu_usage)).size(40);
                 }
