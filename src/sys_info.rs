@@ -7,6 +7,7 @@ pub struct SystemInfo {
 }
 
 impl SystemInfo {
+    // Get current cpu usage (average of all cores) & return average of last 5 usage values.
     pub fn cpu_usage(&mut self) -> f32 {
         self.sys_info.refresh_all();
 
@@ -20,9 +21,7 @@ impl SystemInfo {
 
         self.add_to_queue(new_ave);
 
-        let cpu_usage = self.array_ave();
-
-        cpu_usage
+        return self.array_ave();
     }
 
     fn array_ave(&mut self) -> f32 {
